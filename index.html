@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0418">
 <title>라스베가스 (Las Vegas)</title>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -157,14 +158,136 @@ body{font-family:'Noto Sans KR',sans-serif;color:#f5ecd2;min-height:100vh;
 #rejoin{display:flex;justify-content:center}
 .credit{text-align:center;color:#ffffff55;font-size:13px;margin:36px 0 12px}
 .btn.dark.on{background:linear-gradient(#ffe38a,#e0a92a);color:#3a1a00;box-shadow:0 3px 0 #8a5d10}
+
+/* ================= Vegas Night 테마 ================= */
+:root{--gold:#ffd24a;--nr:#ff3b5c;--nc:#37e6ff}
+html{background:#0d0418}
+body{background:
+  radial-gradient(ellipse 80% 45% at 50% -8%,#8a1c6a99 0%,transparent 62%),
+  radial-gradient(ellipse 55% 40% at 95% 35%,#1b3a8a66,transparent 65%),
+  radial-gradient(ellipse 55% 40% at 0% 65%,#8a1b3a55,transparent 65%),
+  linear-gradient(#0d0418,#1c0a2e 50%,#0d0418) fixed}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.7;
+  background-image:radial-gradient(1.5px 1.5px at 40px 60px,#fff,transparent),radial-gradient(1px 1px at 120px 20px,#ffe9a0,transparent),radial-gradient(1.5px 1.5px at 200px 140px,#fff,transparent),radial-gradient(1px 1px at 280px 90px,#9fe8ff,transparent),radial-gradient(1px 1px at 70px 180px,#fff,transparent),radial-gradient(1.5px 1.5px at 250px 230px,#ffe9a0,transparent);
+  background-size:320px 260px;animation:twinkle 4s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.3}to{opacity:.9}}
+.screen{position:relative;z-index:1}
+
+/* 네온 간판 로고 + 전구 */
+.welcome{text-align:center;color:#ff9db8;letter-spacing:6px;font-weight:900;font-size:13px;text-shadow:0 0 8px #ff3b5c;margin-top:10px}
+.logo{color:#fff4d0;letter-spacing:6px;
+  text-shadow:0 0 4px #fff,0 0 12px #ffd24a,0 0 28px #ff9d00,0 0 52px #ff3b5c,0 5px 0 #7a1a10;animation:flick 6s infinite}
+@keyframes flick{0%,90%,100%{opacity:1}91%{opacity:.7}92%{opacity:1}95%{opacity:.55}96%{opacity:1}}
+.sub{color:#c9b6ea}
+.bulbs{height:18px;margin:6px auto;
+  background:radial-gradient(circle at 10px 50%,#fff3b0 0 3px,#ffc21a 4px,#ff9d00 6px,transparent 7px) 0 0/40px 100% repeat-x,
+             radial-gradient(circle at 30px 50%,#6b4a14 0 3px,transparent 4px) 0 0/40px 100% repeat-x;
+  filter:drop-shadow(0 0 4px #ffb300);animation:chase 1s steps(1) infinite}
+@keyframes chase{0%{background-position:0 0,0 0}50%{background-position:20px 0,20px 0}}
+.hero{display:flex;justify-content:center;gap:34px;align-items:center;height:104px;margin:6px 0 0}
+.hero .die3d{position:relative;--ds:58px;cursor:default;filter:drop-shadow(0 12px 8px #000b)}
+.hero .cube{animation:tumble 9s linear infinite}
+@keyframes tumble{from{transform:rotateX(-20deg) rotateY(0)}to{transform:rotateX(340deg) rotateY(720deg)}}
+.top .ttl{color:#fff4d0;text-shadow:0 0 5px #fff,0 0 14px #ffd24a,0 0 26px #ff3b5c}
+.badge{background:#12061fcc;border:1px solid var(--gold);box-shadow:0 0 8px #ffd24a44}
+
+/* 버튼 */
+.btn{position:relative;overflow:hidden;background:linear-gradient(#fff3ad,#ffc21a 55%,#e08e00);color:#3a1200;
+  box-shadow:0 4px 0 #8a5300,0 6px 16px #ff9d0055;text-shadow:0 1px 0 #ffffffa0}
+.btn:not(.sm):not(.dark):not(.ghost)::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(100deg,transparent,#ffffffaa,transparent);transform:skewX(-20deg);animation:shine 3.4s infinite}
+@keyframes shine{0%,62%{left:-60%}100%{left:140%}}
+.btn.dark{background:linear-gradient(#4b2a6e,#2b1445);color:#f5ecd2;box-shadow:0 3px 0 #12061f;text-shadow:none}
+.btn.ghost{background:transparent;box-shadow:none;border:2px solid #ffd24a66;color:#ffe9a0;text-shadow:none}
+.panel{background:linear-gradient(#1c0b2cee,#0e0618ee);border:2px solid var(--gold);box-shadow:0 0 0 4px #7a1a26,0 0 26px #ff3b5c44;border-radius:16px}
+.panel h3{color:#ffe9a0;text-shadow:0 0 8px #ffd24a88}
+.panel input,.panel select{background:#170a26;border-color:#ffd24a88}
+.credit{color:#c9b6ea77}
+
+/* 테이블: 붉은 벨벳 레일 + 금테 */
+.table{border:0;margin:10px 8px;padding:16px;border-radius:26px;
+  background:repeating-linear-gradient(45deg,#ffffff05 0 2px,transparent 2px 5px),radial-gradient(ellipse at 50% 30%,#1b9c6c 0%,#0c6a47 55%,#07402c 100%);
+  box-shadow:0 0 0 7px #7a1a26,0 0 0 10px var(--gold),0 0 0 12px #a8770a,0 0 44px 12px #ff3b5c44,inset 0 0 60px #000b}
+.casino{border-radius:14px;padding:6px;background:linear-gradient(#0000002a,#00000010);border:1px solid #ffffff14}
+.casino.target{box-shadow:0 0 0 3px #fff,0 0 26px 8px var(--cn,#ffd24a);background:#ffffff14}
+.tile{position:relative;padding:8px 8px 10px;background:linear-gradient(160deg,#1e0d30,#08030f);border:3px solid var(--cn);
+  box-shadow:0 0 8px var(--cn),0 0 22px var(--cg),inset 0 0 14px var(--cg);animation:neon 2.6s ease-in-out infinite alternate}
+.tile::before{content:'';position:absolute;inset:3px;border-radius:7px;border:1px dashed #ffffff33;pointer-events:none}
+@keyframes neon{from{filter:brightness(.88)}to{filter:brightness(1.22)}}
+.cname{text-align:center;font-family:'Black Han Sans',sans-serif;font-size:12px;letter-spacing:2px;margin-bottom:5px;
+  color:var(--cn);text-shadow:0 0 6px var(--cn),0 0 14px var(--cg)}
+.big{background:radial-gradient(circle,#2c1546,#080310);--p:var(--cn)}
+.big .pips i.on{box-shadow:0 0 8px var(--cn),0 0 16px var(--cn),inset 0 -2px 3px #0006}
+.zone{background:#0006;border:1px solid #ffffff12;box-shadow:inset 0 0 12px #000c}
+
+/* 지폐 */
+.bill{height:36px;padding:0 8px 0 38px;border-radius:5px;font-family:Georgia,'Times New Roman',serif;
+  background:repeating-linear-gradient(135deg,#00000010 0 1px,transparent 1px 4px),linear-gradient(120deg,#e6f6cd,#a5d07c 50%,#cde9aa);
+  border:2px solid #356b26;box-shadow:inset 0 0 0 2px #f0fadc,inset 0 0 0 3px #4d8b38,0 3px 5px #000a}
+.bill::before{content:'★';position:absolute;left:7px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;
+  display:grid;place-items:center;font-size:12px;color:#3d7a2a;background:radial-gradient(#f6ffe6,#9ccc76);border:2px solid #4d8b38}
+.bill b{font-size:15px;color:#1d4213;text-shadow:0 1px 0 #ffffffb0;letter-spacing:0}
+.bill.won{box-shadow:inset 0 0 0 2px #f0fadc,inset 0 0 0 3px #4d8b38,0 0 14px 3px #ffd24a,0 3px 5px #000a}
+@media(max-width:700px){.bill{height:29px;padding-left:29px}.bill::before{width:18px;height:18px;left:5px;font-size:9px}.bill b{font-size:12px}}
+
+/* 주사위: 광택 */
+.mini{background:radial-gradient(circle at 28% 22%,#ffffffcc 0,#fff0 38%),linear-gradient(145deg,#fff4,#0006),var(--c);
+  box-shadow:0 2px 3px #000b,inset 0 0 0 1px #fff5,inset 0 -3px 4px #0005}
+.face{background:radial-gradient(circle at 30% 22%,#ffffffbb,#fff0 42%),linear-gradient(145deg,#ffffff44,#00000055),var(--c)}
+
+/* 트레이 */
+.trayWrap{margin-top:24px;padding:0 8px}
+#tray{border:0;border-radius:20px;background:repeating-linear-gradient(45deg,#ffffff05 0 2px,transparent 2px 5px),radial-gradient(ellipse at center,#16a070 0%,#0c6a47 60%,#07402c 100%);
+  box-shadow:0 0 0 7px #7a1a26,0 0 0 10px var(--gold),0 0 0 12px #a8770a,inset 0 0 50px #000c}
+#tray .ph{color:#ffe9a044;letter-spacing:3px}
+.chip{background:linear-gradient(#2c1546,#170a26);border-color:#ffd24a88}
+.chip.on{background:linear-gradient(#5a2c86,#2c1546)}
+.say{color:#ffe9a0}
+.wait{color:#c9b6ea}
+
+/* 플레이어 카드 */
+.pl{background:linear-gradient(#2a1440dd,#160a26dd);border:2px solid #ffffff22;border-left:8px solid var(--c);box-shadow:0 2px 6px #0008}
+.pl.act{border-color:var(--gold);background:linear-gradient(#4a2c12ee,#2a1440ee);animation:pulse 1.4s ease-in-out infinite alternate}
+@keyframes pulse{from{box-shadow:0 0 0 2px #ffd24a55,0 0 14px 2px #ffd24a88}to{box-shadow:0 0 0 2px #ffd24aaa,0 0 28px 8px #ffd24acc}}
+.pl .meta{color:#c9b6ea}
+
+/* 모달 */
+#modal .box{background:linear-gradient(#22103a,#12061f);border:3px solid var(--gold);box-shadow:0 0 0 5px #7a1a26,0 0 40px #ff3b5c66}
+#modal h2{color:#fff4d0;text-shadow:0 0 10px #ffd24a}
+.rank{background:#ffffff0c}
+.rank.win{background:linear-gradient(90deg,#6b4a0acc,#3a2606cc);box-shadow:0 0 18px #ffd24acc}
+
+/* 종이돈·동전 축하 */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+.cf{position:absolute;top:-30px;animation:cfall linear forwards}
+@keyframes cfall{to{transform:translateY(112vh) rotate(var(--rot))}}
+@media(prefers-reduced-motion:reduce){.logo,.tile,.bulbs,.pl.act,body::before,.hero .cube,.btn::after{animation:none!important}}
+
+/* 레이아웃 보정: 칸이 내용 때문에 늘어나지 않게 */
+#casinos{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media(max-width:820px){#casinos{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}}
+.casino{min-width:0}
+.bill{overflow:hidden;gap:3px}
+.bill b{white-space:nowrap;flex:none;font-size:14px}
+.tag{font-size:10px;padding:1px 6px;min-width:0;flex:0 1 auto;max-width:60%}
+@media(max-width:700px){
+  .table{padding:10px;margin:8px 6px}
+  .trayWrap{padding:0 6px}
+  .bill b{font-size:11.5px}
+  .tag{font-size:0;width:15px;height:15px;padding:0;border-radius:50%;flex:none;border:2px solid #ffffffaa}   /* 좁은 화면에선 이름 대신 플레이어 색 점 */
+}
 </style>
 </head>
 <body>
 
 <!-- MENU -->
 <div id="menu" class="screen">
+  <div class="bulbs"></div>
+  <div class="welcome">★ WELCOME TO FABULOUS ★</div>
   <h1 class="logo">LAS VEGAS</h1>
+  <div class="bulbs"></div>
   <p class="sub">라스베가스 · 주사위 보드게임 (2~5명)</p>
+  <div class="hero" id="hero"></div>
 
   <div id="mHome">
     <div class="homebtns">
@@ -229,6 +352,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:#f5ecd2;min-height:100vh;
       <button class="btn sm dark" onclick="toMenu()">🏠</button>
     </div>
   </div>
+  <div class="bulbs"></div>
   <div class="table">
     <div id="casinos"></div>
   </div>
@@ -240,6 +364,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:#f5ecd2;min-height:100vh;
   <div id="players"></div>
 </div>
 
+<div id="fx"></div>
 <div id="connBar">연결이 끊겼어요 — 다시 연결하는 중…</div>
 <div id="toast"></div>
 <button class="chat-btn" id="chatBtn" aria-label="채팅 열기">💬<span class="chat-badge" id="chatBadge">0</span></button>
@@ -280,6 +405,7 @@ const COLORS=[
   {n:'주황',c:'#ef7d1a',p:'#222'}
 ];
 const WHITE={n:'흰색',c:'#f3efe4',p:'#222'};
+const CAS=[{n:'GOLDEN',c:'#ffd24a'},{n:'ROYAL',c:'#ff3b5c'},{n:'LUCKY',c:'#4dff88'},{n:'DIAMOND',c:'#37e6ff'},{n:'PALACE',c:'#b06bff'},{n:'JACKPOT',c:'#ff4fd8'}]; // 카지노 간판 네온색
 const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 const ROT={1:[0,0],6:[0,180],3:[0,-90],4:[0,90],2:[-90,0],5:[90,0]}; // [rotateX, rotateY]로 해당 눈을 앞면으로
 
@@ -506,9 +632,9 @@ function renderCasinos(){
       prevPlaced[key]=e.count;
       return `<div class="grp ${e.cancelled?'cx':''}" style="--c:${col.c}">${d}<span class="cnt">${e.count}${e.cancelled?' ✕':''}</span></div>`;
     }).join('');
-    return `<div class="casino ${sel===i+1?'target':''}" onclick="casinoClick(${i+1})">
+    return `<div class="casino ${sel===i+1?'target':''}" style="--cn:${CAS[i].c};--cg:${CAS[i].c}88" onclick="casinoClick(${i+1})">
       <div class="bills">${bills}</div>
-      <div class="tile"><div class="big">${pips(i+1)}</div></div>
+      <div class="tile" style="animation-delay:${(-i*.45).toFixed(2)}s"><div class="cname">${CAS[i].n}</div><div class="big">${pips(i+1)}</div></div>
       <div class="zone">${zone}</div></div>`;
   }).join('');
 }
@@ -632,7 +758,23 @@ function showRules(){
   <li>라운드마다 시작 플레이어가 왼쪽으로 넘어갑니다. 원작처럼 <b>지폐 금액은 게임 끝까지 비공개</b>(상단 💰로 볼 수 있음).</li>
   </ul><p style="text-align:right"><button class="btn" onclick="closeModal()">닫기</button></p>`);
 }
+let cfShown=null;
+function confetti(){
+  const fx=$('fx');
+  for(let i=0;i<84;i++){
+    const e=document.createElement('i');e.className='cf';
+    const coin=Math.random()<.4;
+    e.style.cssText=`left:${Math.random()*100}%;width:${coin?14:22}px;height:${coin?14:11}px;`+
+      (coin?'border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6b0,#ffc21a 60%,#b87400);box-shadow:0 0 6px #ffc21a;'
+           :'border-radius:2px;background:linear-gradient(135deg,#d8ecb9,#8fc46a);border:1px solid #3f7a2c;')+
+      `animation-duration:${(2.6+Math.random()*2.4).toFixed(2)}s;animation-delay:${(Math.random()*1.2).toFixed(2)}s;--rot:${Math.round((Math.random()<.5?-1:1)*(360+Math.random()*720))}deg;`;
+    fx.appendChild(e);
+  }
+  sndBills();
+  setTimeout(()=>{fx.innerHTML='';},7500);
+}
 function showEnd(){
+  if(G&&!G.aborted&&cfShown!==G.round+'c'&&!matchMedia('(prefers-reduced-motion:reduce)').matches){cfShown=G.round+'c';confetti();}
   const sc=G.players.map((p,i)=>({p,i,s:sumBills(p)})).sort((a,b)=>((+!!a.p.left)-(+!!b.p.left))||(b.s-a.s));
   const active=sc.filter(x=>!x.p.left),top=active.length?active[0].s:0;
   let rk=0;
@@ -658,7 +800,7 @@ function buildNames(){
 function menuPane(n){const m={home:'mHome',local:'mLocal',online:'mOnline'};
   Object.entries(m).forEach(([k,id])=>$(id).classList.toggle('hidden',k!==n));}
 function show(id){['menu','lobby','game'].forEach(s=>$(s).classList.toggle('hidden',s!==id));if(id==='menu')menuPane('home');}
-function resetView(){if(showMoney){showMoney=false;const b=$('bMoney');b.textContent='💰 금액 보기';b.classList.remove('on');}sel=null;rollEnd=0;trayKey=null;firstSync=true;prevPlaced={};prevRound=null;lastReveal=null;endShown=null;}
+function resetView(){cfShown=null;if(showMoney){showMoney=false;const b=$('bMoney');b.textContent='💰 금액 보기';b.classList.remove('on');}sel=null;rollEnd=0;trayKey=null;firstSync=true;prevPlaced={};prevRound=null;lastReveal=null;endShown=null;}
 function startLocal(){
   const names=[...document.querySelectorAll('.lname')].map((e,i)=>e.value.trim()||('플레이어'+(i+1)));
   mode='local';myIdx=-1;resetView();G=makeGame(names,null);
@@ -1037,6 +1179,8 @@ $('chatInput').addEventListener('keydown',e=>{
 });
 
 /* ============ 시작 ============ */
+(function(){const h=$('hero');[0,2,1].forEach((ci,i)=>{const d=makeDie3D(COLORS[ci]);const c=d.firstChild;
+  c.style.animationDuration=(8+i*2.5)+'s';c.style.animationDelay=(-i*3)+'s';h.appendChild(d);});})();
 buildNames();checkRejoin();
 $('oname').value=localStorage.lv_name||'';
 try{const q=new URLSearchParams(location.search).get('room');if(q){$('ocode').value=q.toUpperCase().slice(0,4);menuPane('online');}}catch(e){}
