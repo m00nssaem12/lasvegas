@@ -276,6 +276,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
   .bill b{font-size:11.5px}
   .tag{font-size:0;width:15px;height:15px;padding:0;border-radius:50%;flex:none;border:2px solid #ffffffaa}   /* 좁은 화면에선 이름 대신 플레이어 색 점 */
 }
+.casino{position:relative}
+.casino.target{animation:tgt .7s ease-in-out infinite alternate}
+.casino.target::after{content:'여기에 놓기';position:absolute;left:50%;bottom:-11px;transform:translateX(-50%);z-index:3;
+  background:#ffd24a;color:#3a1200;font-weight:900;font-size:12px;border-radius:12px;padding:2px 10px;white-space:nowrap;
+  box-shadow:0 2px 6px #000a;pointer-events:none}
+@keyframes tgt{from{background:#ffffff10}to{background:#ffffff30}}
 </style>
 </head>
 <body>
@@ -667,7 +673,7 @@ function renderAction(){
       if(can){
         h+='<div class="chips">'+gr.map(([v,n])=>`<button class="chip ${sel===v?'on':''}" onclick="pick(${v})" onmouseenter="hl(${v},1)" onmouseleave="hl(${v},0)">${mini(v,col)}<span>×${n} → 카지노 ${v}</span></button>`).join('')+'</div>';
         const cnt=sel?G.tray.values.filter(x=>x===sel).length:0;
-        h+=sel?`<button class="btn xl" onclick="actPlace()">✅ 카지노 ${sel}번에 ${cnt}개 놓기</button>`:`<div class="wait">놓을 눈을 선택하세요</div>`;
+        h+=sel?`<button class="btn xl" onclick="actPlace()">✅ 카지노 ${sel}번에 ${cnt}개 놓기</button><div class="wait" style="padding:6px 0 0;font-size:13px">또는 깜빡이는 <b>카지노 ${sel}번</b>을 눌러도 바로 놓여요</div>`:`<div class="wait">놓을 눈을 선택하세요 (주사위나 위 버튼을 눌러요)</div>`;
       }else h+=`<div class="wait">선택을 기다리는 중…</div>`;
     }
   }else if(G.phase==='roundEnd'){
