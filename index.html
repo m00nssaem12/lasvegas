@@ -115,7 +115,8 @@ body{font-family:'Noto Sans KR',sans-serif;color:#f5ecd2;min-height:100vh;
 
 /* modal */
 #modal{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:50;padding:14px}
-#modal .box{background:#2a1409;border:3px solid var(--gold);border-radius:16px;padding:18px;max-width:560px;width:100%;max-height:88vh;overflow:auto;line-height:1.6}
+#modal .box{background:#2a1409;border:3px solid var(--gold);border-radius:16px;padding:18px;max-width:560px;width:100%;max-height:88vh;max-height:calc(100dvh - 28px);overflow:auto;line-height:1.6;overscroll-behavior:contain}
+.mx{position:sticky;top:0;float:right;margin:-6px -6px 0 8px;width:36px;height:36px;border-radius:50%;border:2px solid #7d4d26;background:#22110a;color:#f5ecd2;font-size:16px;cursor:pointer;z-index:2}
 #modal h2{color:#ffd76a;margin-bottom:8px;font-family:'Black Han Sans'}
 #modal li{margin-left:20px;margin-bottom:5px}
 .rank{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;background:#0005;margin:6px 0;border-left:8px solid var(--c)}
@@ -155,6 +156,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:#f5ecd2;min-height:100vh;
 .btn.ghost:hover{background:#ffffff14}
 #rejoin{display:flex;justify-content:center}
 .credit{text-align:center;color:#ffffff55;font-size:13px;margin:36px 0 12px}
+.btn.dark.on{background:linear-gradient(#ffe38a,#e0a92a);color:#3a1a00;box-shadow:0 3px 0 #8a5d10}
 </style>
 </head>
 <body>
@@ -223,7 +225,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:#f5ecd2;min-height:100vh;
     <div>
       <button class="btn sm dark" onclick="showRules()">📖 규칙</button>
       <button class="btn sm dark" id="bSnd" onclick="toggleSnd()">🔊</button>
-      <button class="btn sm dark" onclick="toggleMoney()">💰 금액</button>
+      <button class="btn sm dark" id="bMoney" onclick="toggleMoney()">💰 금액 보기</button>
       <button class="btn sm dark" onclick="toMenu()">🏠</button>
     </div>
   </div>
@@ -616,7 +618,9 @@ function syncTray(){
 }
 
 /* ============ 모달 / 규칙 / 결과 ============ */
-function modal(html){$('modalBox').innerHTML=html;$('modal').classList.remove('hidden');}
+function modal(html){$('modalBox').innerHTML='<button class="mx" onclick="closeModal()" aria-label="닫기">✕</button>'+html;$('modalBox').scrollTop=0;$('modal').classList.remove('hidden');}
+$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal();});   // 바깥 어두운 곳을 눌러도 닫힘
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 function closeModal(){$('modal').classList.add('hidden');}
 function showRules(){
   modal(`<h2>📖 라스베가스 규칙</h2><ul>
@@ -638,7 +642,12 @@ function showEnd(){
     return `<div class="rank ${win?'win':''}" style="--c:${c.c}">${mini(6,c)}<div style="flex:1"><b>${win?'👑 ':''}${label} ${esc(x.p.name)}</b><br><small>지폐: ${x.p.bills.map(b=>'$'+b/1000+'k').join(' ')||'없음'}</small></div><b>$${x.s.toLocaleString('en-US')}</b></div>`;
   }).join('')+`<p style="text-align:right;margin-top:10px"><button class="btn dark" onclick="closeModal()">보드 보기</button> <button class="btn" onclick="closeModal();toMenu()">메뉴로</button></p>`);
 }
-function toggleMoney(){showMoney=!showMoney;if(G)renderPlayers();}
+function toggleMoney(){
+  showMoney=!showMoney;
+  const b=$('bMoney');b.textContent=showMoney?'💰 금액 숨기기':'💰 금액 보기';b.classList.toggle('on',showMoney);
+  if(G)renderPlayers();
+  if(G&&mode==='online'&&showMoney)toast('온라인에서는 내 금액만 볼 수 있어요');
+}
 
 /* ============ 메뉴 / 로컬 ============ */
 function buildNames(){
@@ -649,7 +658,7 @@ function buildNames(){
 function menuPane(n){const m={home:'mHome',local:'mLocal',online:'mOnline'};
   Object.entries(m).forEach(([k,id])=>$(id).classList.toggle('hidden',k!==n));}
 function show(id){['menu','lobby','game'].forEach(s=>$(s).classList.toggle('hidden',s!==id));if(id==='menu')menuPane('home');}
-function resetView(){sel=null;rollEnd=0;trayKey=null;firstSync=true;prevPlaced={};prevRound=null;lastReveal=null;endShown=null;}
+function resetView(){if(showMoney){showMoney=false;const b=$('bMoney');b.textContent='💰 금액 보기';b.classList.remove('on');}sel=null;rollEnd=0;trayKey=null;firstSync=true;prevPlaced={};prevRound=null;lastReveal=null;endShown=null;}
 function startLocal(){
   const names=[...document.querySelectorAll('.lname')].map((e,i)=>e.value.trim()||('플레이어'+(i+1)));
   mode='local';myIdx=-1;resetView();G=makeGame(names,null);
