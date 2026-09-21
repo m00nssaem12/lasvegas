@@ -149,6 +149,12 @@ body{font-family:'Noto Sans KR',sans-serif;color:#f5ecd2;min-height:100vh;
 .chat-in{display:flex;gap:6px;padding:9px;border-top:1px solid #5a3519}
 .chat-in input{font-size:.92rem;padding:8px 10px;min-width:0;flex:1;border-radius:8px;border:2px solid #7d4d26;background:#22110a;color:#fff;font-family:inherit}
 @media(max-width:520px){.chat-box{right:4vw;left:4vw;width:auto}}
+.homebtns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+#mHome{margin-top:5vh}
+.btn.ghost{background:transparent;color:#f5ecd2;border:2px solid #ffffff33;box-shadow:none;font-weight:700;padding:9px 20px}
+.btn.ghost:hover{background:#ffffff14}
+#rejoin{display:flex;justify-content:center}
+.credit{text-align:center;color:#ffffff55;font-size:13px;margin:36px 0 12px}
 </style>
 </head>
 <body>
@@ -157,21 +163,39 @@ body{font-family:'Noto Sans KR',sans-serif;color:#f5ecd2;min-height:100vh;
 <div id="menu" class="screen">
   <h1 class="logo">LAS VEGAS</h1>
   <p class="sub">라스베가스 · 주사위 보드게임 (2~5명)</p>
-  <div class="panel">
-    <h3>🏠 로컬 게임 (한 화면에서 번갈아)</h3>
-    <div class="row">인원 <select id="lpn" onchange="buildNames()"><option>2</option><option>3</option><option selected>4</option><option>5</option></select></div>
-    <div id="lnames"></div>
-    <button class="btn" onclick="startLocal()">게임 시작</button>
-  </div>
-  <div class="panel">
-    <h3>🌐 온라인 게임</h3>
-    <div class="row"><input id="oname" placeholder="내 이름" maxlength="10"></div>
-    <div class="row"><button class="btn" onclick="createRoom()">방 만들기</button></div>
-    <div class="row"><input id="ocode" placeholder="방 코드" maxlength="4" style="width:110px;text-transform:uppercase">
-      <button class="btn" onclick="joinRoom()">참가</button></div>
+
+  <div id="mHome">
+    <div class="homebtns">
+      <button class="btn xl" onclick="menuPane('local')">로컬 게임</button>
+      <button class="btn xl" onclick="menuPane('online')">온라인 게임</button>
+    </div>
+    <div class="homebtns"><button class="btn ghost" onclick="showRules()">게임 방법</button></div>
     <div id="rejoin"></div>
+    <div class="credit">made by m00n</div>
   </div>
-  <div style="text-align:center"><button class="btn dark" onclick="showRules()">📖 규칙 보기</button></div>
+
+  <div id="mLocal" class="hidden">
+    <div class="panel">
+      <h3>🏠 로컬 게임 <small style="font-weight:400;color:#d9c48a">(한 화면에서 번갈아)</small></h3>
+      <div class="row">인원 <select id="lpn" onchange="buildNames()"><option>2</option><option>3</option><option selected>4</option><option>5</option></select></div>
+      <div id="lnames"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="startLocal()">게임 시작</button>
+        <button class="btn dark" onclick="menuPane('home')">← 뒤로</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mOnline" class="hidden">
+    <div class="panel">
+      <h3>🌐 온라인 게임</h3>
+      <div class="row"><input id="oname" placeholder="내 이름" maxlength="10"></div>
+      <div class="row"><button class="btn" onclick="createRoom()">방 만들기</button></div>
+      <div class="row"><input id="ocode" placeholder="방 코드" maxlength="4" style="width:110px;text-transform:uppercase">
+        <button class="btn" onclick="joinRoom()">참가</button></div>
+      <div class="row" style="margin-top:10px"><button class="btn dark" onclick="menuPane('home')">← 뒤로</button></div>
+    </div>
+  </div>
 </div>
 
 <!-- LOBBY -->
@@ -622,7 +646,9 @@ function buildNames(){
   for(let i=0;i<n;i++)h+=`<div class="row">${mini(6,COLORS[i])}<input class="lname" value="플레이어${i+1}" maxlength="10"></div>`;
   $('lnames').innerHTML=h;
 }
-function show(id){['menu','lobby','game'].forEach(s=>$(s).classList.toggle('hidden',s!==id));}
+function menuPane(n){const m={home:'mHome',local:'mLocal',online:'mOnline'};
+  Object.entries(m).forEach(([k,id])=>$(id).classList.toggle('hidden',k!==n));}
+function show(id){['menu','lobby','game'].forEach(s=>$(s).classList.toggle('hidden',s!==id));if(id==='menu')menuPane('home');}
 function resetView(){sel=null;rollEnd=0;trayKey=null;firstSync=true;prevPlaced={};prevRound=null;lastReveal=null;endShown=null;}
 function startLocal(){
   const names=[...document.querySelectorAll('.lname')].map((e,i)=>e.value.trim()||('플레이어'+(i+1)));
@@ -1004,7 +1030,7 @@ $('chatInput').addEventListener('keydown',e=>{
 /* ============ 시작 ============ */
 buildNames();checkRejoin();
 $('oname').value=localStorage.lv_name||'';
-try{const q=new URLSearchParams(location.search).get('room');if(q)$('ocode').value=q.toUpperCase().slice(0,4);}catch(e){}
+try{const q=new URLSearchParams(location.search).get('room');if(q){$('ocode').value=q.toUpperCase().slice(0,4);menuPane('online');}}catch(e){}
 </script>
 </body>
 </html>
